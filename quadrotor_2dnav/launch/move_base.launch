@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<launch>
+<arg name="spawn_drone" default="true" />
+   <master auto="start"/>
+
+<group if="$(arg spawn_drone)" ns="quadrotor1">
+  <arg name="namespace" value="quadrotor1"/>
+ <!--- Run AMCL --> 
+    <include file="$(find amcl)/examples/amcl_omni.launch" />
+   <arg name="scan_topic"  default="quadrotor1/ardrone/laser" />
+  <arg name="base_frame"  default="quadrotor1/base_link"/>
+  <arg name="odom_frame"  default="quadrotor1/map"/>
+  
+ <!-- Run the map server --> 
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find quadrotor_2dnav)/maps/mymap.yaml my_map_resolution">
+    </node>
+
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+
+    <param name="base_frame" value="$(arg base_frame)"/>
+    <param name="odom_frame" value="$(arg odom_frame)"/>
+    <remap from="scan" to="$(arg scan_topic)"/>
+
+    <rosparam file="$(find quadrotor_2dnav)/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+    <rosparam file="$(find quadrotor_2dnav)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find quadrotor_2dnav)/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find quadrotor_2dnav)/global_costmap_params.yaml" command="load" /> 
+    <rosparam file="$(find quadrotor_2dnav)/base_local_planner_params.yaml" command="load" />
+ </node>
+</group>
+
+
+<group if="$(arg spawn_drone)" ns="quadrotor2">
+  <arg name="namespace" value="quadrotor2"/>
+ <!--- Run AMCL --> 
+    <include file="$(find amcl)/examples/amcl_omni.launch" />
+   <arg name="scan_topic"  default="quadrotor2/ardrone/laser" />
+  <arg name="base_frame"  default="quadrotor2/base_link"/>
+  <arg name="odom_frame"  default="quadrotor2/map"/>
+  
+ <!-- Run the map server --> 
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find quadrotor_2dnav)/maps/mymap.yaml my_map_resolution">
+    </node>
+
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+
+    <param name="base_frame" value="$(arg base_frame)"/>
+    <param name="odom_frame" value="$(arg odom_frame)"/>
+    <remap from="scan" to="$(arg scan_topic)"/>
+
+    <rosparam file="$(find quadrotor_2dnav)/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+    <rosparam file="$(find quadrotor_2dnav)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find quadrotor_2dnav)/local_costmap_params2.yaml" command="load" />
+    <rosparam file="$(find quadrotor_2dnav)/global_costmap_params2.yaml" command="load" /> 
+    <rosparam file="$(find quadrotor_2dnav)/base_local_planner_params.yaml" command="load" />
+ </node>
+</group>
+
+
+<group if="$(arg spawn_drone)" ns="quadrotor3">
+  <arg name="namespace" value="quadrotor3"/>
+ <!--- Run AMCL --> 
+    <include file="$(find amcl)/examples/amcl_omni.launch" />
+   <arg name="scan_topic"  default="quadrotor3/ardrone/laser" />
+  <arg name="base_frame"  default="quadrotor3/base_link"/>
+  <arg name="odom_frame"  default="quadrotor3/map"/>
+  
+ <!-- Run the map server --> 
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find quadrotor_2dnav)/maps/mymap.yaml my_map_resolution">
+    </node>
+
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+
+    <param name="base_frame" value="$(arg base_frame)"/>
+    <param name="odom_frame" value="$(arg odom_frame)"/>
+    <remap from="scan" to="$(arg scan_topic)"/>
+
+    <rosparam file="$(find quadrotor_2dnav)/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+    <rosparam file="$(find quadrotor_2dnav)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find quadrotor_2dnav)/local_costmap_params3.yaml" command="load" />
+    <rosparam file="$(find quadrotor_2dnav)/global_costmap_params3.yaml" command="load" /> 
+    <rosparam file="$(find quadrotor_2dnav)/base_local_planner_params.yaml" command="load" />
+ </node>
+</group>
+</launch> 

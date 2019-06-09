@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="spawn_drone" default="true" />
+
+		<node pkg="quadrotor_2dnav" name="formation_controller" type="formation_controller.py" output="screen">
+		</node>  
+</launch>
