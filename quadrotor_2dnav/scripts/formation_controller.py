@@ -56,17 +56,16 @@ class object:
 
 	def get_new_goal(self, msg):
 		self.pos1 = msg
-		print(self.pos1)
+		#print(self.pos1)
 
 	def calculate(self):
 		self.pos2 = self.pos1
 		self.pos3 = self.pos1
 		orientation_list = [self.pos1.pose.orientation.x, self.pos1.pose.orientation.y, self.pos1.pose.orientation.z, self.pos1.pose.orientation.w]
 		(roll, pitch, yaw) = euler_from_quaternion (orientation_list)
-		print(yaw)
-		print("EDW EIMAI GAMW TA APADA")
-		#self.pos2.pose.position.x = self.pos1.pose.position.x + hypot(cos(yaw+3.14159265359),sin(yaw+3.14159265359))
-		#self.pos2.pose.position.y = self.pos1.pose.position.y + hypot(cos(yaw+1.57079632679),sin(yaw+1.57079632679))
+
+		self.pos2.pose.position.x = self.pos1.pose.position.x + hypot(cos(yaw+3.14159265359),sin(yaw+3.14159265359))
+		self.pos2.pose.position.y = self.pos1.pose.position.y + hypot(cos(yaw+1.57079632679),sin(yaw+1.57079632679))
 		self.pos3.pose.position.x = self.pos1.pose.position.x + (cos(yaw-1.57079632679)/fabs(cos(yaw-1.57079632679)) * sin(yaw-1.57079632679)/fabs(sin(yaw-1.57079632679)) *       hypot(cos(yaw-1.57079632679),sin(yaw-1.57079632679)))
 		self.pos3.pose.position.y = self.pos1.pose.position.y + (cos(yaw+3.14159265359)/fabs(cos(yaw+3.14159265359)) * sin(yaw+3.14159265359)/fabs(sin(yaw+3.14159265359)) *       hypot(cos(yaw+3.14159265359),sin(yaw+3.14159265359)))
 		#print(self.pos2.pose.position.x)
